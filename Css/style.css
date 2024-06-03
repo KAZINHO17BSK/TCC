@@ -19,6 +19,11 @@ header{
     line-height: 10px;
 }
 
+p {
+    font-family: 'Arial';
+    font-size: large;
+}
+
 li{
     display: inline-block;
     margin: 20px;
@@ -70,9 +75,7 @@ p{
     font-family: poppinslight;
 }
 
-img{
-    width: 580px;
-}
+
 
 form{
     display: flex;
