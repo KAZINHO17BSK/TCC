@@ -20,8 +20,8 @@
             
             <a href="#"><li>Login Sistema</li></a>
             <a href="./supervisores.html"><li>Supervisores</li></a>
-            <a href="#"><li>Suporte</li></a>
-            <a href="./Teste/teste.html" id="inscreva-se-btn"><li>Marcar Presença</li></a>
+            <a href="./Suporte/index.html"><li>Suporte</li></a>
+            <a href="./Teste/teste.php" id="inscreva-se-btn"><li>Marcar Presença</li></a>
         </ul>
     </header>
 
@@ -32,11 +32,10 @@
             <p>
                Você pode marcar sua presença no dia de hoje, a partir de um sistema controlado por banco de dados, colocando seu usuário e sua senha, confirmando sua presença com um email de confirmação.
             </p>
-            <form>
-                <input type="text" placeholder="Usuário" required>
-                <input type="password" placeholder="Senha" required>
-                <a href="#">Esqueci a senha</a>
-                <a href="#"><input type="submit" value="Login >"></a>
+            <form action="./Login/login.php" method="post">
+                <input type="text" id="username" name="username" placeholder="Username" required><br><br>
+                <input type="password" id="password" name="password" placeholder="senha" required><br><br>
+                <input type="submit" value="Login">
             </form>
         </aside>
 
