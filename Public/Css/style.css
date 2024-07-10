@@ -75,8 +75,6 @@ p {
     font-family: poppinslight;
 }
 
-
-
 form {
     display: flex;
     flex-direction: column;
@@ -110,4 +108,8 @@ img {
     width: 50%;
     right: 5%;
     border-radius: 5%;
+}
+
+ul {
+    list-style-type: none;
 }

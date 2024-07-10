@@ -1,0 +1,133 @@
+body {
+    background-color: #222222;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1%;
+    border: 1px solid rgb(132, 14, 201);
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav h1 {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    margin: 0;
+}
+
+nav ul li {
+    margin-left: 35px;
+    font-size: 21px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:active {
+    color: rgb(132, 14, 201);
+}
+
+.banner .aa {
+    color: rgb(132, 14, 201);
+}
+.banner {
+    margin-top: 14%;
+    padding-left: 15%;
+}
+.banner img {
+    padding-left: 35%;
+    margin-top: -13%;
+    position: absolute;
+} 
+
+.banner a {
+    border: 2px solid rgb(132, 14, 201);
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.banner a:hover {
+    background-color: rgb(132, 14, 201);
+    color: white;
+}
+
+.faixa {
+    background-color: #555;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 20%;
+}
+
+.card {
+    margin-top: 2%;
+    width: 300px; /* Largura fixa para os cards */
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px; /* Espaço entre os cards */
+    text-align: center;
+    transition: transform 0.3s ease-in-out; /* Transição suave para a propriedade transform */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Para posicionamento dos elementos internos */
+    overflow: hidden; /* Esconde o conteúdo que deve aparecer ao aumentar */
+}
+
+.card img {
+    width: 80px; /* Tamanho do ícone */
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: black;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+    height: 0; /* Inicialmente esconde o texto */
+    opacity: 0; /* Inicialmente esconde o texto */
+    transition: height 0.3s ease, opacity 0.3s ease; /* Transição suave para altura e opacidade */
+}
+
+.card:hover {
+    transform: translateY(-15%); /* Aumenta 15% para cima ao passar o mouse */
+}
+
+.card:hover p {
+    height: auto; /* Mostra o texto completo */
+    opacity: 1; /* Mostra o texto completo */
+}
+
+.card a.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.card a.btn:hover {
+    background-color: #0056b3;
+}
+
