@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     color: white;
+    font-family: 'Arial';
 }
 
 nav {
@@ -43,6 +44,11 @@ a:active {
 .banner .aa {
     color: rgb(132, 14, 201);
 }
+
+.banner h1 {
+    font-size: 50px;
+}
+
 .banner {
     margin-top: 14%;
     padding-left: 15%;
@@ -71,26 +77,23 @@ a:active {
     align-items: flex-start;
     flex-wrap: wrap;
     margin-top: 20%;
+    padding-bottom: 3%;
 }
 
 .card {
-    margin-top: 2%;
-    width: 300px; /* Largura fixa para os cards */
+    width: 300px;
     background-color: #f0f0f0;
     padding: 20px;
-    margin-bottom: 20px; /* Espaço entre os cards */
+    margin-bottom: 20px;
     text-align: center;
-    transition: transform 0.3s ease-in-out; /* Transição suave para a propriedade transform */
+    transition: transform 0.3s ease-in-out;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative; /* Para posicionamento dos elementos internos */
-    overflow: hidden; /* Esconde o conteúdo que deve aparecer ao aumentar */
+    position: relative;
+    overflow: hidden;
+    margin-top: 4%;
 }
 
-.card img {
-    width: 80px; /* Tamanho do ícone */
-    margin-bottom: 15px;
-}
 
 .card h3 {
     color: black;
@@ -102,18 +105,17 @@ a:active {
     font-size: 14px;
     line-height: 1.5;
     color: #555;
-    height: 0; /* Inicialmente esconde o texto */
-    opacity: 0; /* Inicialmente esconde o texto */
-    transition: height 0.3s ease, opacity 0.3s ease; /* Transição suave para altura e opacidade */
+    height: 0;
+    opacity: 0;
+    transition: height 0.3s ease, opacity 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-15%); /* Aumenta 15% para cima ao passar o mouse */
+    transform: translateY(-15%);
 }
 
 .card:hover p {
-    height: auto; /* Mostra o texto completo */
-    opacity: 1; /* Mostra o texto completo */
+    opacity: 1;
 }
 
 .card a.btn {
@@ -123,7 +125,7 @@ a:active {
     color: #fff;
     text-decoration: none;
     border-radius: 4px;
-    margin-top: 10px;
+    margin-top: 50px;
     transition: background-color 0.3s ease;
 }
 
@@ -131,3 +133,76 @@ a:active {
     background-color: #0056b3;
 }
 
+footer {
+    font-family: 'Arial';
+    font-size: 30px;
+}
+
+footer h3 {
+    font-size: 25px;
+    color: black;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+}
+
+.footer-section ul.social-media {
+    display: flex;
+}
+
+.footer-section ul.social-media li {
+    margin-right: 25px;
+}
+
+
+.footer-bottom {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 20px;
+}
+
+.footer-bottom p {
+    margin: 5px 0;
+}
+
+.footer-bottom-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.footer-bottom-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom-text {
+    margin-top: 10px;
+    font-size: 17px;
+}
