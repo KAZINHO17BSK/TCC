@@ -6,6 +6,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+// Configuração da conexão com o banco de dados
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -21,38 +22,57 @@ connection.connect((err) => {
     console.log('Conexão bem sucedida ao banco de dados!');
 });
 
+// Middleware para processar o corpo das requisições
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); // Adicionado para lidar com JSON
 
-app.post('/insert-login', (req, res) => {
+// Nova rota para processamento de login
+app.post('/submit-form', (req, res) => {
     const { username, password } = req.body;
 
-    connection.query('INSERT INTO logins (username, password) VALUES (?, ?)', [username, password], (err, result) => {
+    // Consulta SQL atualizada para usar a tabela e as colunas corretas
+    const sql = 'SELECT * FROM logins WHERE username = ? AND password = ?';
+    connection.query(sql, [username, password], (err, results) => {
         if (err) {
-            console.error('Erro ao inserir login:', err);
-            res.json({ success: false, message: 'Erro ao registrar login.' });
+            console.error('Erro ao executar consulta SQL:', err);
+            res.status(500).json({ error: 'Erro interno ao tentar fazer login' });
+            return;
+        }
+
+        if (results.length > 0) {
+            const user = results[0];
+            if (user.isAdmin) {
+                res.json({ redirect: '/adm/index.html' }); // Redirecionamento para administrador
+            } else {
+                res.json({ redirect: '/usuario/index.html' }); // Redirecionamento para usuário
+            }
         } else {
-            console.log('Login registrado com sucesso!');
-            res.json({ success: true, message: 'Login registrado com sucesso!' });
+            res.status(401).json({ error: 'Usuário ou senha incorretos' });
         }
     });
 });
 
+// Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rota para servir a página inicial
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta: ${port}`);
-});
-
+// Rota para obter todos os logins (se necessário)
 app.get('/api/logins', (req, res) => {
     connection.query('SELECT * FROM logins', (err, results) => {
         if (err) {
-            res.status(500).send({ error: 'Error fetching logins' });
+            console.error('Erro ao buscar logins:', err);
+            res.status(500).json({ error: 'Erro ao buscar logins' });
         } else {
             res.json(results);
         }
     });
+});
+
+// Iniciar o servidor
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta: ${port}`);
 });

@@ -1,23 +1,19 @@
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-event.preventDefault();
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-const formData = new FormData(this);
-const data = new URLSearchParams(formData);
+    const formData = new FormData(this);
 
-fetch('http://localhost:3000/insert-login', {
-method: 'POST',
-body: data,
-})
-.then(response => response.json())
-.then(result => {
-if (result.success) {
-alert('Login registrado com sucesso!');
-window.location.href = '../PG/index.html';
-} else {
-alert('Erro ao registrar login: ' + result.message);
-}
-})
-.catch(error => {
-alert('Erro ao enviar o formulário: ' + error.message);
-});
+    fetch('/submit-form', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+            alert(data.error);
+        }
+    })
+    .catch(error => console.error('Erro ao enviar o formulário:', error));
 });
