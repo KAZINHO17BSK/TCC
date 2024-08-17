@@ -60,15 +60,38 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Rota para obter todos os logins (se necessário)
-app.get('/api/logins', (req, res) => {
-    connection.query('SELECT * FROM logins', (err, results) => {
+// Rota para obter todos os funcionários
+app.get('/api/funcionarios', (req, res) => {
+    console.log('Request received for /api/funcionarios'); // Log para verificar se a requisição está sendo recebida
+    connection.query('SELECT * FROM Funcionarios', (err, results) => {
         if (err) {
-            console.error('Erro ao buscar logins:', err);
-            res.status(500).json({ error: 'Erro ao buscar logins' });
+            console.error('Erro ao buscar funcionários:', err);
+            res.status(500).json({ error: 'Erro ao buscar funcionários' });
         } else {
+            console.log('Funcionários encontrados:', results); // Log para verificar os dados retornados
             res.json(results);
         }
+    });
+});
+
+// Nova rota para receber dados RFID e inseri-los no banco de dados
+app.post('/api/rfid', (req, res) => {
+    const rfid = req.body.rfid;
+
+    if (!rfid) {
+        return res.status(400).json({ error: 'Nenhum dado RFID recebido' });
+    }
+
+    // Consulta SQL para inserir dados no banco
+    const sql = 'INSERT INTO RFID_Log (rfid_uid) VALUES (?)';
+    connection.query(sql, [rfid], (err, results) => {
+        if (err) {
+            console.error('Erro ao inserir dados RFID:', err);
+            return res.status(500).json({ error: 'Erro ao inserir dados RFID' });
+        }
+
+        console.log('Dados RFID inseridos com sucesso:', results);
+        res.json({ success: true, id: results.insertId });
     });
 });
 

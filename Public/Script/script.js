@@ -1,3 +1,4 @@
+//Script para enviar dados 
 document.getElementById('loginForm').addEventListener('submit', function(event) {
     event.preventDefault();
 

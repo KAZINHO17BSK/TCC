@@ -1,3 +1,4 @@
+//Script da parte dos patrocinadores
 const wrapper = document.querySelector('.carousel-wrapper');
         const items = document.querySelectorAll('.carousel-item');
         const prevButton = document.getElementById('prev');

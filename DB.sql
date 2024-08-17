@@ -31,4 +31,16 @@ INSERT INTO logins (username, password, isAdmin) VALUES
 INSERT INTO Funcionarios (nome, numero_registro, setor) VALUES 
 ('Ana Silva', 101, 'Recursos Humanos'),
 ('Carlos Pereira', 102, 'Financeiro'),
-('Mariana Oliveira', 103, 'TI');
+('Mariana Oliveira', 103, 'TI'),
+('Julio Madeira', 104, 'TI'),
+('Neymar Junior', 105, 'Marketing'),
+('Fernando Luiz', 106, 'Logística'),
+('Felipe Martins', 107, 'Recursos Humanos'),
+('Luana Lima', 108, 'Financeiro'),
+('Rafael Pereira', 109, 'Marketing'),
+('Beatriz Silva', 110, 'Logística'),
+('Eduardo Castro', 111, 'TI'),
+('Larissa Fernandes', 112, 'Recursos Humanos'),
+('Gustavo Oliveira', 113, 'Financeiro'),
+('Roberta Almeida', 114, 'Marketing'),
+('Vinícius Carvalho', 115, 'Logística');

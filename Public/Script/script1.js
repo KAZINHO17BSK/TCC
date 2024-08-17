@@ -1,35 +1,37 @@
-fetch('/api/logins')
-            .then(response => response.json())
-            .then(data => {
-                const container = document.getElementById('loginData');
-                data.forEach(login => {
-                    const row = document.createElement('tr');
-                    const usernameCell = document.createElement('td');
-                    const passwordCell = document.createElement('td');
-                    const loginTimeCell = document.createElement('td');
-                    usernameCell.textContent = login.username;
-                    passwordCell.textContent = login.password;
-                    passwordCell.classList.add('password-cell');
-                    passwordCell.dataset.password = login.password; // Armazena a senha original nos dados do elemento
-                    const loginTime = new Date(login.login_time);
-                    loginTimeCell.textContent = loginTime.toLocaleString();
-                    row.appendChild(usernameCell);
-                    row.appendChild(passwordCell);
-                    row.appendChild(loginTimeCell);
-                    container.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error('Failed to load data:', error);
-                document.getElementById('loginData').textContent = 'Failed to load data';
-            });
+// Script para carregar dados da tabela de funcionários
+fetch('/api/funcionarios')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Dados recebidos:', data); // Log para verificar os dados recebidos
+        const container = document.getElementById('funcionarioData');
+        container.innerHTML = ''; // Limpa o conteúdo existente
 
-        document.getElementById('togglePasswordButton').addEventListener('click', function () {
-            const passwordCells = document.querySelectorAll('.password-cell');
-            passwordCells.forEach(cell => {
-                const currentText = cell.textContent;
-                const originalPassword = cell.dataset.password; // Obtém a senha original dos dados do elemento
-                const isPasswordVisible = currentText === originalPassword;
-                cell.textContent = isPasswordVisible ? '********' : originalPassword;
-            });
+        data.forEach(funcionario => {
+            const row = document.createElement('tr');
+            const nomeCell = document.createElement('td');
+            const numeroRegistroCell = document.createElement('td');
+            const setorCell = document.createElement('td');
+
+            // Adiciona os dados das células
+            nomeCell.textContent = funcionario.nome;
+            numeroRegistroCell.textContent = funcionario.numero_registro;
+            setorCell.textContent = funcionario.setor;
+
+            // Adiciona as células à linha
+            row.appendChild(nomeCell);
+            row.appendChild(numeroRegistroCell);
+            row.appendChild(setorCell);
+
+            // Adiciona a linha à tabela
+            container.appendChild(row);
         });
+    })
+    .catch(error => {
+        console.error('Failed to load data:', error);
+        document.getElementById('funcionarioData').textContent = 'Failed to load data: ' + error.message;
+    });
