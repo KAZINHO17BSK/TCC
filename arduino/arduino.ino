@@ -1,84 +1,71 @@
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <WiFiServer.h>
-#include <WiFiUdp.h>
-
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <Wire.h>
 #include <SPI.h>
 #include <MFRC522.h>
+#include <ESP8266WiFi.h>
+#include <HTTPClient.h>
 
-// Defina os pinos usados pelo módulo RFID
-#define SS_PIN 4
-#define RST_PIN 5
+// Definições do RFID
+#define SS_PIN D4  // Pin de seleção do Slave (SS)
+#define RST_PIN D3  // Pin de Reset
+MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-MFRC522 mfrc522(SS_PIN, RST_PIN); // Cria uma instância do MFRC522
+// Dados do Wi-Fi
+const char* ssid = "Gabrielly";          // Substituir pelo nome da sua rede Wi-Fi
+const char* password = "porradesenha";     // Substituir pela senha da sua rede Wi-Fi
 
-// Configurações da rede Wi-Fi
-const char* ssid = "YOUR_SSID";
-const char* password = "YOUR_PASSWORD";
-
-// URL do servidor Node.js
-const char* serverUrl = "http://YOUR_SERVER_IP:3000/api/rfid";
+const char* serverName = "http://192.168.1.100:3000/api/rfid";  // Substituir pelo IP local do seu servidor
 
 void setup() {
-  Serial.begin(115200); // Inicializa a comunicação serial
-  WiFi.begin(ssid, password); // Conecta à rede Wi-Fi
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("Conectado ao Wi-Fi!");
+  Serial.begin(115200);
+  SPI.begin();           // Inicia o SPI
+  mfrc522.PCD_Init();    // Inicia o módulo RFID
 
-  mfrc522.PCD_Init(); // Inicializa o módulo RFID
+  // Conectar ao Wi-Fi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Conectando ao WiFi...");
+  }
+  Serial.println("Conectado ao WiFi");
 }
 
 void loop() {
+  // Olha se tem um novo cartão RFID presente
   if (!mfrc522.PICC_IsNewCardPresent()) {
     return;
   }
-
+  
+  // Seleciona o cartão
   if (!mfrc522.PICC_ReadCardSerial()) {
     return;
   }
 
-  String rfidUID = "";
-
-  // Construa a string do UID do RFID
+  // Lê o UID do cartão
+  String rfidTag = "";
   for (byte i = 0; i < mfrc522.uid.size; i++) {
-    rfidUID += String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : "");
-    rfidUID += String(mfrc522.uid.uidByte[i], HEX);
+    rfidTag += String(mfrc522.uid.uidByte[i], HEX);
   }
-  rfidUID.toUpperCase();
-
-  // Envia o UID do RFID para o servidor
-  sendRFIDToServer(rfidUID);
-
-  delay(5000); // Aguarda 5 segundos antes de ler o próximo cartão
-}
-
-void sendRFIDToServer(String rfidUID) {
+  Serial.println("UID do cartão: " + rfidTag);
+  
+  // Enviar o UID para o servidor
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(serverUrl); // Inicializa a conexão HTTP
-
-    http.addHeader("Content-Type", "application/json"); // Define o tipo de conteúdo
-
-    // Cria o JSON com o UID do RFID
-    String payload = "{\"rfid\":\"" + rfidUID + "\"}";
-    int httpResponseCode = http.POST(payload); // Envia a requisição POST
-
+    http.begin(serverName);
+    http.addHeader("Content-Type", "application/json");
+    
+    String httpRequestData = "{\"rfid\":\"" + rfidTag + "\"}";
+    int httpResponseCode = http.POST(httpRequestData);
+    
     if (httpResponseCode > 0) {
       String response = http.getString();
       Serial.println("Resposta do servidor: " + response);
     } else {
-      Serial.println("Erro na requisição HTTP: " + String(httpResponseCode));
+      Serial.println("Erro ao enviar POST: " + String(httpResponseCode));
     }
-
-    http.end(); // Fecha a conexão HTTP
+    
+    http.end();
   } else {
-    Serial.println("Erro de conexão Wi-Fi");
+    Serial.println("WiFi desconectado");
   }
+  
+  delay(2000);  // Aguardar antes de verificar outro cartão
 }
