@@ -12,7 +12,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 const char* ssid = "Gabrielly";          // Substituir pelo nome da sua rede Wi-Fi
 const char* password = "porradesenha";     // Substituir pela senha da sua rede Wi-Fi
 
-const char* serverName = "http://192.168.1.100:3000/api/rfid";  // Substituir pelo IP local do seu servidor
+const char* serverName = "http://192.168.1.100:3000/api/rfid";  // Substituir pelo IP local do nosso servidor
 
 void setup() {
   Serial.begin(115200);
